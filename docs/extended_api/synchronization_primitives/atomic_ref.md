@@ -18,7 +18,11 @@ The class template `cuda::atomic_ref` is an extended form of [`cuda::std::atomic
   `cuda::std::thread_scope_system`.
 It has the same interface and semantics as [`cuda::std::atomic_ref`], with the
   following additional operations.
-This class additionally deviates from the standard in that it is backported to C++11.
+This class additionally deviates from the standard by being backported to C++11.
+
+## Limitations
+
+`cuda::atomic_ref<T>` and `cuda::std::atomic_ref<T>` may only be instantiated with types sized between 4 and 8 bytes.
 
 ## Atomic Fence Operations
 
