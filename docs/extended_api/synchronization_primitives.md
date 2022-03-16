@@ -54,4 +54,3 @@ The pipeline library is included in the CUDA Toolkit, but is not part of the
 [`cuda::make_pipeline`]: {{ "extended_api/synchronization_primitives/make_pipeline.html" | relative_url }}
 [`cuda::pipeline_consumer_wait_prior`]: {{ "extended_api/synchronization_primitives/pipeline_consumer_wait_prior.html" | relative_url }}
 [`cuda::pipeline_producer_commit`]: {{ "extended_api/synchronization_primitives/pipeline_producer_commit.html" | relative_url }}
-

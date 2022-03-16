@@ -1,7 +1,7 @@
 ---
 grand_parent: Extended API
 parent: Synchronization Primitives
-nav_order: 0
+nav_order: 1
 ---
 
 # `cuda::atomic_ref`
