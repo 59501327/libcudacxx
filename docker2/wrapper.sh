@@ -27,6 +27,8 @@ function abspath {
 
 SCRIPT_PATH=$(cd $(dirname ${0}); pwd -P)
 
+pushd SCRIPT_PATH
+
 # Default to GCC
 HOST_CXX=gcc
 
