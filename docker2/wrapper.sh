@@ -27,8 +27,6 @@ function abspath {
 
 SCRIPT_PATH=$(cd $(dirname ${0}); pwd -P)
 
-pushd $SCRIPT_PATH
-
 # Default to GCC
 HOST_CXX=gcc
 
@@ -47,6 +45,8 @@ do
   esac
   shift
 done
+
+pushd $SCRIPT_PATH
 
 HOST_CXX_ARG="--build-arg HOST_CXX=$HOST_CXX"
 
@@ -78,7 +78,17 @@ done
 
 section_separator
 
-tempdir=$(mktemp -d)
+TEMP_DIR=$(mktemp -d)
 
-docker build -f base.Dockerfile    -t cccl/base   ${CUDA_DIR}
+LIBCUDA=$(ldconfig -p | grep libcuda.so | tr ' ' '\n' | grep / | head -n 1 | tr '\n' ' ' | sed 's/ *$//')
+LIBNVIDIAPTXJITCOMPILER=$(ldconfig -p | grep libnvidia-ptxjitcompiler.so | tr ' ' '\n' | grep / | head -n 1 | tr '\n' ' ' | sed 's/ *$//')
+
+cp ${LIBCUDA} ${LIBNVIDIAPTXJITCOMPILER} ${TEMP_DIR}
+if [ "${?}" != "0" ]; then exit 1; fi
+
+chmod -R 755 ${TEMP_DIR}
+if [ "${?}" != "0" ]; then exit 1; fi
+
+docker build -f driver.Dockerfile  -t cccl/driver-native      ${TEMP_DIR}
+docker build -f base.Dockerfile    -t cccl/base               ${CUDA_DIR}
 docker build -f config.Dockerfile  -t cccl/config-${HOST_CXX} ${CUDACXX_PATH} ${HOST_CXX_ARG} ${LIBCUDACXX_DIR}
