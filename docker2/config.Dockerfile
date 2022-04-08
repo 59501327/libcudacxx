@@ -32,4 +32,5 @@ RUN function comment() { :; }; \
         -DLIBCUDACXX_ENABLE_LIBCXX_TESTS=ON \
         -DLIBCUDACXX_TEST_STANDARD_VER=c++${CXX_DIALECT} \
         -DCMAKE_CXX_COMPILER=${HOST_CXX} \
-        -DCMAKE_CUDA_COMPILER=/cuda/${CUDACXX_PATH}
+        -DCMAKE_CUDA_COMPILER=/cuda/${CUDACXX_PATH} && \
+    make -j -C /build/libcxx

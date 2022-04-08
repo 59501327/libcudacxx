@@ -48,7 +48,15 @@ done
 
 pushd $SCRIPT_PATH
 
+# Ensure we use C frontend for naming the created image
+HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/g++/gcc/)
+HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/clang++/clang/)
+
 HOST_CXX_ARG="--build-arg HOST_CXX=$HOST_CXX"
+
+# Remap C frontend to C++ frontend
+HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/gcc/g++/)
+HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/clang/clang++/)
 
 ################################################################################
 # Dump Variables
@@ -65,13 +73,12 @@ VARIABLES="
   NVCXX_ENABLED
 "
 
-section_separator
+section_separatorc
 
 for VARIABLE in ${VARIABLES}
 do
   printf "# VARIABLE %s%q\n" "${VARIABLE}=" "${!VARIABLE}"
 done
-
 
 ################################################################################
 # Begin building container
