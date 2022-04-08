@@ -48,13 +48,13 @@ done
 
 pushd $SCRIPT_PATH
 
-# Ensure we use C frontend for naming the created image
-HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/g++/gcc/)
-HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/clang++/clang/)
+# Ensure we use the C compiler for the name of the image
+HOST_CXX=$(echo ${HOST_CXX} | sed s/g++/gcc/)
+HOST_CXX=$(echo ${HOST_CXX} | sed s/clang++/clang/)
 
 HOST_CXX_ARG="--build-arg HOST_CXX=$HOST_CXX"
 
-# Remap C frontend to C++ frontend
+# Remap C to C++ frontend to implicitly link the correct standard library
 HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/gcc/g++/)
 HOST_CXX_ARG=$(echo ${HOST_CXX_ARG} | sed s/clang/clang++/)
 
