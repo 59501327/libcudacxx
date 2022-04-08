@@ -73,7 +73,7 @@ VARIABLES="
   NVCXX_ENABLED
 "
 
-section_separatorc
+section_separator
 
 for VARIABLE in ${VARIABLES}
 do
