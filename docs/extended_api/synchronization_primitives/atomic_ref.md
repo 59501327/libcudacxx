@@ -24,14 +24,14 @@ This class additionally deviates from the standard by being backported to C++11.
 
 `cuda::atomic_ref<T>` and `cuda::std::atomic_ref<T>` may only be instantiated with types sized between 4 and 8 bytes.
 
-## Atomic Fence Operations
+Constructing multiple `cuda::std::atomic_ref<T, Sco>` with the same reference, but different values for `Sco` is illegal.
 
-| [`cuda::atomic_thread_fence`] | Memory order and scope dependent fence synchronization primitive. `(function)` |
+`cuda::std::atomic_ref<T>` may be used with structures, however padded objects will result in undefined behaviour.
 
 ## Atomic Extrema Operations
 
-| [`cuda::atomic::fetch_min`] | Atomically find the minimum of the stored value and a provided value. `(member function)` |
-| [`cuda::atomic::fetch_max`] | Atomically find the maximum of the stored value and a provided value. `(member function)` |
+| [`cuda::atomic_ref::fetch_min`] | Atomically find the minimum of the stored value and a provided value. `(member function)` |
+| [`cuda::atomic_ref::fetch_max`] | Atomically find the maximum of the stored value and a provided value. `(member function)` |
 
 ## Concurrency Restrictions
 
@@ -43,7 +43,7 @@ An object of type `cuda::atomic_ref` or [`cuda::std::atomic_ref`] shall not be a
 Note, for objects of scopes other than `cuda::thread_scope_system` this is a
   data-race, and thefore also prohibited regardless of memory characteristics.
 
-Under CUDA Compute Capability 6 (Pascal), an object of type `atomic` may not be
+Under CUDA Compute Capability 6 (Pascal), an object of type `atomic_ref` may not be
   used:
 - with automatic storage duration, or
 - if `is_always_lock_free()` is `false`.
@@ -88,8 +88,8 @@ __global__ void example_kernel(int *gmem, int *pinned_mem) {
 
 [`cuda::atomic_thread_fence`]: ./atomic/atomic_thread_fence.md
 
-[`cuda::atomic::fetch_min`]: ./atomic/fetch_min.md
-[`cuda::atomic::fetch_max`]: ./atomic/fetch_max.md
+[`cuda::atomic_ref::fetch_min`]: ./atomic/fetch_min.md
+[`cuda::atomic_ref::fetch_max`]: ./atomic/fetch_max.md
 
 [`cuda::std::atomic_ref`]: https://en.cppreference.com/w/cpp/atomic/atomic_ref
 
